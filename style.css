@@ -1,0 +1,672 @@
+/* ==========================================================================
+   Aura Digital Invitations: Mohamed & Heba Exact Clone Theme
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+    --bg-sand: #fbf8f2;
+    --bg-body: #ffffff;
+    --gold: #c5a059;
+    --gold-dark: #af8945;
+    --gold-subtle: rgba(197, 160, 89, 0.35);
+    --gold-border: #e6dac6;
+    --text-navy-dark: #1b2838;
+    --text-muted: #828a95;
+    --box-border: #f0eae1;
+    --shadow-light: 0 10px 30px rgba(0, 0, 0, 0.035);
+}
+
+html, body {
+    width: 100%;
+    min-height: 100%;
+    background-color: var(--bg-sand);
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text-navy-dark);
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* نجوم وجزيئات خفيفة في الخلفية */
+.stars-canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: 
+        radial-gradient(#c5a059 1px, transparent 1px),
+        radial-gradient(#c5a059 0.7px, transparent 0.7px);
+    background-size: 70px 70px, 110px 110px;
+    background-position: 0 0, 35px 55px;
+    opacity: 0.22;
+    z-index: 1;
+}
+
+/* ==================== زر القرص الموسيقي الذهبي العائم ==================== */
+.music-controller {
+    position: fixed;
+    top: calc(18px + env(safe-area-inset-top));
+    right: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    z-index: 99999;
+    cursor: pointer;
+}
+
+.music-disk {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1.5px solid var(--gold);
+    color: var(--gold);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(197, 160, 89, 0.22);
+}
+
+.music-disk svg {
+    width: 24px;
+    height: 24px;
+}
+
+.music-txt {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 1.5px;
+    color: var(--gold);
+    font-weight: 600;
+}
+
+.disk-spinning {
+    animation: spinDisk 4s linear infinite;
+}
+
+@keyframes spinDisk {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ==================== شاشة الظرف الملكي (Envelope Screen) ==================== */
+.envelope-hero {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    background: var(--bg-sand);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.85s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
+}
+
+.envelope-hero.opened {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.envelope-container {
+    width: 250px;
+    height: 165px;
+    position: relative;
+    margin-bottom: 35px;
+    perspective: 800px;
+}
+
+.envelope-outer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #e8dfcf;
+    border-radius: 6px;
+    box-shadow: 0 16px 38px rgba(0, 0, 0, 0.08);
+}
+
+.env-back {
+    position: absolute;
+    inset: 0;
+    background: #e4dbc9;
+    border-radius: 6px;
+}
+
+.env-top-flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-left: 125px solid transparent;
+    border-right: 125px solid transparent;
+    border-top: 92px solid #ded4bf;
+    transform-origin: top;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 5;
+}
+
+.env-top-flap.flap-open {
+    transform: rotateX(180deg);
+    z-index: 1;
+}
+
+.env-left-fold {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-top: 82px solid transparent;
+    border-bottom: 83px solid transparent;
+    border-left: 125px solid #ece4d4;
+    z-index: 3;
+}
+
+.env-right-fold {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border-top: 82px solid transparent;
+    border-bottom: 83px solid transparent;
+    border-right: 125px solid #e7ded0;
+    z-index: 3;
+}
+
+.env-bottom-fold {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-left: 125px solid transparent;
+    border-right: 125px solid transparent;
+    border-bottom: 100px solid #dfd5c2;
+    z-index: 4;
+}
+
+.wax-seal-badge {
+    position: absolute;
+    top: 72px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 44px;
+    height: 44px;
+    background: radial-gradient(circle, #e8cb85 0%, #ba9144 100%);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.16);
+    z-index: 6;
+    transition: opacity 0.3s;
+}
+
+.env-card-insert {
+    position: absolute;
+    top: 15px;
+    left: 14px;
+    right: 14px;
+    height: 125px;
+    background: #ffffff;
+    border: 1px solid var(--gold-border);
+    border-radius: 4px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    transition: transform 0.6s ease-out;
+}
+
+.env-card-insert.card-slide-up {
+    transform: translateY(-40px);
+}
+
+.env-card-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 1.2px;
+    color: var(--text-muted);
+}
+
+.env-card-names {
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.45rem;
+    color: var(--gold);
+    margin: 2px 0;
+}
+
+.env-card-leaf {
+    color: var(--gold);
+    font-size: 0.85rem;
+}
+
+.invitation-intro {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    color: var(--text-navy-dark);
+    margin-bottom: 12px;
+}
+
+.invitation-names-cursive {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(2.6rem, 8vw, 3.4rem);
+    color: var(--gold);
+    margin-bottom: 25px;
+    font-weight: 400;
+}
+
+.open-card-btn {
+    border: 1px solid var(--gold);
+    background: #ffffff;
+    color: var(--gold-dark);
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    padding: 12px 32px;
+    border-radius: 3px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(197, 160, 89, 0.12);
+    transition: all 0.25s;
+}
+
+.open-card-btn:active {
+    transform: scale(0.96);
+    background: var(--bg-sand);
+}
+
+/* ==================== محتوى الدعوة الرئيسي ==================== */
+.invitation-main {
+    width: 100%;
+    max-width: 440px;
+    min-height: 100vh;
+    background-color: var(--bg-body);
+    margin: 0 auto;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 2;
+}
+
+/* ==================== بانر الطفولة المدمج بالتلاشي المتدرج ==================== */
+.hero-showcase {
+    position: relative;
+    width: 100%;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+}
+
+.childhood-merged-banner {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    display: flex;
+    overflow: hidden;
+}
+
+.child-half {
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.child-half img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    filter: brightness(0.97) contrast(0.98);
+}
+
+/* التدرج الأبيض المتلاشي تماماً زي تمبلت محمد وهبة */
+.banner-gradient-fade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.65) 75%,
+        #ffffff 100%
+    );
+    pointer-events: none;
+}
+
+.hero-content-wrap {
+    padding: 0 20px 30px 20px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    margin-top: -15px;
+}
+
+.families-greeting {
+    font-size: 0.86rem;
+    color: var(--text-navy-dark);
+    line-height: 1.6;
+    margin-bottom: 8px;
+    font-weight: 400;
+}
+
+.hero-cursive-names {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(2.7rem, 8.5vw, 3.5rem);
+    color: var(--gold);
+    font-weight: 400;
+    margin-bottom: 8px;
+}
+
+.hero-date-text {
+    font-size: 0.88rem;
+    color: var(--gold-dark);
+    font-weight: 500;
+    margin-bottom: 22px;
+}
+
+.hero-details-anchor {
+    display: inline-block;
+    border: 1px solid var(--gold);
+    color: var(--gold-dark);
+    text-decoration: none;
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    letter-spacing: 2px;
+    padding: 11px 26px;
+    border-radius: 3px;
+    font-weight: 600;
+    margin-bottom: 22px;
+    transition: all 0.25s;
+}
+
+.scroll-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+}
+
+.scroll-dash {
+    animation: dashBounce 1.6s infinite ease-in-out;
+    margin-top: 3px;
+    font-size: 0.95rem;
+}
+
+@keyframes dashBounce {
+    0%, 100% { transform: translateY(0); opacity: 0.4; }
+    50% { transform: translateY(6px); opacity: 1; }
+}
+
+/* ==================== البلوكات العامة ==================== */
+.content-block {
+    padding: 38px 20px;
+    text-align: center;
+    border-top: 1px solid var(--box-border);
+}
+
+.block-tag {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.74rem;
+    letter-spacing: 3px;
+    color: var(--gold);
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.block-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem;
+    color: var(--text-navy-dark);
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.gold-divider-line {
+    width: 65px;
+    height: 1.5px;
+    background: var(--gold);
+    margin: 14px auto 26px auto;
+    opacity: 0.85;
+}
+
+/* الآية الكريمة */
+.quran-block {
+    background: #faf8f4;
+    padding: 26px 20px;
+}
+
+.bismillah {
+    font-family: 'Amiri', serif;
+    font-size: 1.25rem;
+    color: var(--gold);
+    margin-bottom: 6px;
+}
+
+.verse-body {
+    font-family: 'Amiri', serif;
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--text-navy-dark);
+    direction: rtl;
+}
+
+/* ==================== العداد الصندوقي ==================== */
+.boxes-countdown-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.time-box {
+    background: #ffffff;
+    border: 1px solid var(--gold-border);
+    border-radius: 12px;
+    padding: 16px 6px;
+    box-shadow: var(--shadow-light);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.time-digit {
+    font-family: 'Cinzel', serif;
+    font-size: 1.55rem;
+    color: var(--gold);
+    font-weight: 600;
+}
+
+.time-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+/* ==================== بطاقة تفاصيل القاعة ==================== */
+.venue-inner-card {
+    background: #ffffff;
+    border: 1px solid var(--gold-border);
+    border-radius: 16px;
+    padding: 30px 18px;
+    box-shadow: var(--shadow-light);
+}
+
+.venue-heading {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    color: var(--text-navy-dark);
+    margin-bottom: 10px;
+}
+
+.venue-name-ar {
+    font-family: 'Amiri', serif;
+    font-size: 1.35rem;
+    color: var(--gold);
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.venue-name-en {
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+}
+
+.venue-schedule {
+    font-size: 0.9rem;
+    color: var(--text-navy-dark);
+    margin-bottom: 24px;
+}
+
+.map-gold-btn {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--gold);
+    color: var(--gold-dark);
+    text-decoration: none;
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    padding: 13px 20px;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: all 0.25s;
+    background: #ffffff;
+}
+
+.map-gold-btn:active {
+    transform: scale(0.97);
+    background: var(--bg-sand);
+}
+
+/* ==================== سجل التبريكات (Wishes) ==================== */
+.wishes-input-card {
+    background: #ffffff;
+    border: 1px solid var(--gold-border);
+    border-radius: 16px;
+    padding: 22px 16px;
+    box-shadow: var(--shadow-light);
+    margin-bottom: 22px;
+}
+
+.wishes-input-card input, .wishes-input-card textarea {
+    width: 100%;
+    padding: 13px 14px;
+    margin-bottom: 12px;
+    border: 1px solid #e7ded0;
+    border-radius: 6px;
+    font-family: 'Montserrat', 'Amiri', sans-serif;
+    font-size: 0.92rem;
+    color: var(--text-navy-dark);
+    background: #fbf9f5;
+    outline: none;
+}
+
+.wishes-input-card input:focus, .wishes-input-card textarea:focus {
+    border-color: var(--gold);
+    background: #ffffff;
+}
+
+.send-btn {
+    cursor: pointer;
+}
+
+.wishes-list {
+    max-height: 280px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.wish-item-card {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 15px 16px;
+    text-align: right;
+    direction: rtl;
+    border-right: 3.5px solid var(--gold);
+    border-top: 1px solid var(--box-border);
+    border-bottom: 1px solid var(--box-border);
+    border-left: 1px solid var(--box-border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.wish-item-name {
+    font-family: 'Montserrat', 'Amiri', serif;
+    font-weight: 700;
+    color: var(--gold-dark);
+    font-size: 1.05rem;
+    margin-bottom: 4px;
+}
+
+.wish-item-msg {
+    font-family: 'Amiri', serif;
+    font-size: 1.05rem;
+    color: var(--text-navy-dark);
+    line-height: 1.6;
+    margin-bottom: 6px;
+}
+
+.wish-item-date {
+    font-size: 0.74rem;
+    color: var(--text-muted);
+    direction: ltr;
+    display: inline-block;
+}
+
+/* ==================== الخاتمة ==================== */
+.invitation-footer {
+    padding: 45px 20px;
+    text-align: center;
+    background: #fbf9f5;
+    border-top: 1px solid var(--box-border);
+}
+
+.footer-names {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3rem;
+    color: var(--gold);
+    font-weight: 400;
+}
+
+.footer-note {
+    font-size: 0.88rem;
+    line-height: 1.8;
+    color: var(--text-navy-dark);
+    margin-bottom: 16px;
+}
+
+.footer-date {
+    font-size: 0.82rem;
+    color: var(--gold-dark);
+    font-weight: 600;
+    margin-bottom: 24px;
+}
+
+.footer-brand {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    letter-spacing: 2.5px;
+    color: var(--text-muted);
+}

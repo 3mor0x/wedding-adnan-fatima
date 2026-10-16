@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Adnan & Fatima - Wedding Invitation</title>
+    
+    <!-- خطوط التمبلت الأصلية بالمللي -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Amiri:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- خلفية الجزيئات والنجوم الناعمة الموزعة -->
+    <div class="stars-canvas" id="starsBg"></div>
+
+    <!-- زر الموسيقى العائم أعلى اليمين (قرص ذهبي يدور مع التشغيل) -->
+    <div class="music-controller" onclick="toggleAudio()" id="musicToggleBtn" title="Toggle Music">
+        <div class="music-disk" id="musicDisk">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                <circle cx="12" cy="12" r="6" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="2,2"/>
+                <circle cx="12" cy="12" r="3" fill="currentColor"/>
+            </svg>
+        </div>
+        <span class="music-txt">MUSIC</span>
+    </div>
+
+    <audio id="bg-music" loop preload="auto">
+        <source src="song.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- ==================== 1. شاشة الظرف الشمعي التفاعلي ==================== -->
+    <section class="envelope-hero" id="envelopeScreen">
+        <div class="envelope-container" id="envelopeWrapper">
+            <div class="envelope-outer">
+                <div class="env-back"></div>
+                
+                <!-- كارت الدعوة المستخرج من الظرف -->
+                <div class="env-card-insert">
+                    <p class="env-card-sub">The Honor of Your Presence is Requested</p>
+                    <p class="env-card-names">Adnan & Fatima</p>
+                    <div class="env-card-leaf">❧</div>
+                </div>
+
+                <div class="env-left-fold"></div>
+                <div class="env-right-fold"></div>
+                <div class="env-bottom-fold"></div>
+                <div class="env-top-flap" id="envTopFlap"></div>
+                
+                <!-- الختم الشمعي الدائري -->
+                <div class="wax-seal-badge" id="waxSeal">
+                    <span class="seal-initials">A&F</span>
+                </div>
+            </div>
+        </div>
+
+        <p class="invitation-intro">YOU ARE CORDIALLY INVITED TO CELEBRATE OUR WEDDING</p>
+        <h1 class="invitation-names-cursive">Adnan & Fatima</h1>
+        <button class="open-card-btn" onclick="openInvitationAction()">OPEN INVITATION</button>
+    </section>
+
+    <!-- ==================== 2. محتوى الدعوة الكامل (Mobile Viewport) ==================== -->
+    <main class="invitation-main" id="mainContent">
+        
+        <!-- قسم الهيرو وبانر الطفولة המدمج بنفس التلاشي السفلي -->
+        <header class="hero-showcase">
+            <div class="childhood-merged-banner">
+                <div class="child-half">
+                    <img src="adnan-child.jpg" alt="Adnan Childhood">
+                </div>
+                <div class="child-half">
+                    <img src="fatima-child.jpg" alt="Fatima Childhood">
+                </div>
+                <!-- طبقة التلاشي الأبيض/البيج السفلي التدريجي -->
+                <div class="banner-gradient-fade"></div>
+            </div>
+
+            <div class="hero-content-wrap">
+                <p class="families-greeting">Together with our families, we invite you to celebrate our wedding</p>
+                <h2 class="hero-cursive-names">Adnan & Fatima</h2>
+                <p class="hero-date-text">Monday, October 26, 2026 • 7:00 PM</p>
+                
+                <a href="#venueSection" class="hero-details-anchor">VENUE & DETAILS</a>
+                
+                <div class="scroll-indicator">
+                    <span>SCROLL TO EXPLORE</span>
+                    <div class="scroll-dash">|</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- الآية الكريمة -->
+        <section class="content-block quran-block">
+            <p class="bismillah">بِسْمِ اللَّـهِ الرَّحْمَـٰنِ الرَّحِيمِ</p>
+            <p class="verse-body">« وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً »</p>
+        </section>
+
+        <!-- العداد التنازلي الصندوقي COUNTING DOWN -->
+        <section class="content-block countdown-block">
+            <span class="block-tag">COUNTING DOWN</span>
+            <h3 class="block-title">The Wedding Countdown</h3>
+            <div class="gold-divider-line"></div>
+
+            <div class="boxes-countdown-grid">
+                <div class="time-box">
+                    <span class="time-digit" id="days">00</span>
+                    <span class="time-label">DAYS</span>
+                </div>
+                <div class="time-box">
+                    <span class="time-digit" id="hours">00</span>
+                    <span class="time-label">HOURS</span>
+                </div>
+                <div class="time-box">
+                    <span class="time-digit" id="minutes">00</span>
+                    <span class="time-label">MINUTES</span>
+                </div>
+                <div class="time-box">
+                    <span class="time-digit" id="seconds">00</span>
+                    <span class="time-label">SECONDS</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- تفاصيل القاعة والموقع VENUE & DETAILS -->
+        <section class="content-block venue-block" id="venueSection">
+            <span class="block-tag">VENUE & DETAILS</span>
+            <h3 class="block-title">Wedding Celebration</h3>
+            <div class="gold-divider-line"></div>
+
+            <div class="venue-inner-card">
+                <h4 class="venue-heading">Celebration Venue</h4>
+                <p class="venue-name-ar">❖ فندق القناطر - أريحا ❖</p>
+                <p class="venue-name-en">AL QANATER HOTEL JERICHO</p>
+                <p class="venue-schedule">🕒 Monday 26/10/2026 at 7:00 PM</p>
+
+                <a href="https://maps.apple/p/scZtnQS-e-mTW7" target="_blank" class="map-gold-btn">
+                    📍 THE LOCATION ON MAP
+                </a>
+            </div>
+        </section>
+
+        <!-- سجل التبريكات WARM BLESSINGS -->
+        <section class="content-block wishes-block">
+            <span class="block-tag">WARM BLESSINGS</span>
+            <h3 class="block-title">Send Your Wishes</h3>
+            <div class="gold-divider-line"></div>
+
+            <div class="wishes-input-card">
+                <input type="text" id="guestName" placeholder="Your Name" required>
+                <textarea id="guestMessage" rows="3" placeholder="Leave a heartfelt message for Adnan & Fatima..." required></textarea>
+                <button onclick="addWish()" class="map-gold-btn send-btn">SEND BLESSING</button>
+            </div>
+
+            <!-- قائمة عرض التهاني الحية -->
+            <div class="wishes-list" id="wishesFeed"></div>
+        </section>
+
+        <!-- الخاتمة -->
+        <footer class="invitation-footer">
+            <h2 class="footer-names">Adnan & Fatima</h2>
+            <div class="gold-divider-line"></div>
+            <p class="footer-note">
+                With hearts full of joy and love, we warmly invite you to celebrate our wedding.<br>
+                Your presence will make our special day complete 🤍
+            </p>
+            <p class="footer-date">Monday, October 26, 2026 • 7:00 PM</p>
+            <p class="footer-brand">DIGITAL WEDDING INVITATION</p>
+        </footer>
+
+    </main>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
