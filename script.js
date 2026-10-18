@@ -1,4 +1,4 @@
-// 1. Firebase Config لرسائل تهاني عدنان وفاطمة
+// 1. Firebase Config لرسائل د. عدنان وفاطمة
 const firebaseConfig = {
     databaseURL: "https://wedding-apps-cc913-default-rtdb.firebaseio.com/"
 };
@@ -11,27 +11,36 @@ const audio = document.getElementById('bg-music');
 const disk = document.getElementById('musicDisk');
 let isAudioPlaying = false;
 
+document.addEventListener('DOMContentLoaded', () => {
+    buildCalendar();
+
+    wishesRef.on('child_added', (snapshot) => {
+        const wish = snapshot.val();
+        renderWish(wish);
+    });
+});
+
 function openInvitationAction() {
     const flap = document.getElementById('envTopFlap');
     const seal = document.getElementById('waxSeal');
     const card = document.querySelector('.env-card-insert');
     const envelopeScreen = document.getElementById('envelopeScreen');
 
-    // فتح غطاء الظرف الشمعي أولاً
+    // فتح غطاء الظرف
     if (seal) seal.style.opacity = '0';
     if (flap) flap.classList.add('flap-open');
 
-    // إخراج كارت الدعوة من داخل الظرف بنعومة
+    // سحب الكارت
     setTimeout(() => {
         if (card) card.classList.add('card-slide-up');
     }, 250);
 
-    // سحب شاشة الظرف بالكامل لأعلى لإظهار محتوى الدعوة
+    // سحب شاشة الظرف لأعلى
     setTimeout(() => {
         envelopeScreen.classList.add('opened');
     }, 750);
 
-    // بدء تشغيل الأغنية بالتزامن مع الفتح
+    // تشغيل الأغنية بالتزامن مع الفتح
     audio.play().then(() => {
         isAudioPlaying = true;
         disk.classList.add('disk-spinning');
@@ -53,7 +62,43 @@ function toggleAudio() {
     }
 }
 
-// 3. العداد التنازلي: الإثنين 26 أكتوبر 2026 الساعة 7:00 مساءً
+// 3. بناء تقويم شهر أكتوبر 2026 مع تظليل يوم 26
+function buildCalendar() {
+    const grid = document.getElementById('calendarGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    
+    // رؤوس الأيام الأسبوعية
+    const headers = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
+    headers.forEach(h => {
+        const div = document.createElement('div');
+        div.className = 'cal-header-day';
+        div.innerText = h;
+        grid.appendChild(div);
+    });
+
+    // 1 أكتوبر 2026 يبدأ يوم الخميس (4 أيام فارغة: الأحد، الإثنين، الثلاثاء، الأربعاء)
+    for (let i = 0; i < 4; i++) {
+        const emptyCell = document.createElement('div');
+        grid.appendChild(emptyCell);
+    }
+
+    // أيام الشهر من 1 إلى 31
+    for (let d = 1; d <= 31; d++) {
+        const dayCell = document.createElement('div');
+        dayCell.className = 'cal-day-cell';
+        
+        // تظليل يوم الفرح 26 أكتوبر
+        if (d === 26) {
+            dayCell.classList.add('wedding-highlight');
+        }
+        
+        dayCell.innerText = d;
+        grid.appendChild(dayCell);
+    }
+}
+
+// 4. العداد التنازلي: الإثنين 26 أكتوبر 2026 الساعة 7:00 مساءً
 const weddingTimestamp = new Date('October 26, 2026 19:00:00').getTime();
 
 setInterval(() => {
@@ -78,14 +123,7 @@ setInterval(() => {
     }
 }, 1000);
 
-// 4. استرجاع وعرض المباركات من Firebase
-document.addEventListener('DOMContentLoaded', () => {
-    wishesRef.on('child_added', (snapshot) => {
-        const wish = snapshot.val();
-        renderWish(wish);
-    });
-});
-
+// 5. استرجاع وإضافة التبريكات من Firebase
 function addWish() {
     const nameInput = document.getElementById('guestName');
     const msgInput = document.getElementById('guestMessage');
